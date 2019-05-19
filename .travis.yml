@@ -13,8 +13,8 @@ script:
   - git config --global user.email $GitHubMail
   - git config --global user.name $GitHubName
   - git config --global color.ui true
-  - git clone https://android.googlesource.com/kernel/mediatek -b android-3.18 --single-branch
-  - cd android-3.18
+  - git clone https://android.googlesource.com/kernel/mediatek -b android-3.18 --single-branch aosp_kernel_mediatek/
+  - cd aosp_kernel_mediatek/
   - rm -rf .git
   - git init && git checkout --orphan android-3.18
   - git add -A .
