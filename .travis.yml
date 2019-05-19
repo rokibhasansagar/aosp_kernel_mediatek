@@ -1,0 +1,30 @@
+os: linux
+dist: xenial
+sudo: required
+git:
+  depth: 10
+addons:
+  apt:
+    update:
+    - true
+install: true
+script:
+  - "travis_wait 30 sleep 1800 &"
+  - git config --global user.email $GitHubMail
+  - git config --global user.name $GitHubName
+  - git config --global color.ui true
+  - git clone https://android.googlesource.com/kernel/mediatek -b android-3.18 --single-branch
+  - cd android-3.18
+  - rm -rf .git
+  - git init && git checkout --orphan android-3.18
+  - git add -A .
+  - git commit -q -m "Release 3.18.y MediaTek Kernel Source at $(date +%Y%m%d-%H%M)"
+  - git remote add origin https://github.com/rokibhasansagar/aosp_kernel_mediatek.git
+  - git branch --track -f master
+  - git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:android-3.18
+branches:
+  only:
+  - master
+  except:
+  - /^(?i:untagged)-.*$/
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
