@@ -9,19 +9,22 @@ addons:
     - true
 install: true
 script:
-  - "travis_wait 30 sleep 1800 &"
+  - "travis_wait 30 sleep 2400 &"
   - git config --global user.email $GitHubMail
   - git config --global user.name $GitHubName
   - git config --global color.ui true
-  - git clone https://github.com/rokibhasansagar/aosp_kernel_mediatek.git -b android-3.18 $TRAVIS_BUILD_DIR/renewed/
-  - cd $TRAVIS_BUILD_DIR/renewed/
-  - git remote add -t android-3.18 upstream https://android.googlesource.com/kernel/mediatek.git
-  - git pull upstream android-3.18 --allow-unrelated-histories
-  - git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:android-3.18
-  - cd -
+  - git clone https://github.com/rokibhasansagar/aosp_kernel_mediatek.git -b android-3.18 $TRAVIS_BUILD_DIR/kernel/
+  - cd $TRAVIS_BUILD_DIR/
+  - git clone https://android.googlesource.com/kernel/mediatek -b android-3.18 --single-branch renewed_kernel_mediatek/
+  - rm -rf renewed_kernel_mediatek/.git
+  - cd $TRAVIS_BUILD_DIR/kernel/
+  - rm -rf *
+  - cp -a $TRAVIS_BUILD_DIR/renewed_kernel_mediatek/* .
+  - rm -rf $TRAVIS_BUILD_DIR/renewed_kernel_mediatek/
+  - git add -A .
   - git commit --amend
-  - git commit -m -q "Release 3.18.y MediaTek Kernel Source at $(date +%Y%m%d-%H%M)"
-  - git push --force https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:master
+  - git commit -m "Release 3.18.y MediaTek Kernel Source at $(date +%Y%m%d-%H%M)"
+  - git push --force https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:android-3.18
 branches:
   only:
   - master
