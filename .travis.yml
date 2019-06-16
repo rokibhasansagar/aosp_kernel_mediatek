@@ -16,7 +16,7 @@ script:
   - git clone https://github.com/rokibhasansagar/aosp_kernel_mediatek.git -b android-3.18 $TRAVIS_BUILD_DIR/renewed/
   - cd $TRAVIS_BUILD_DIR/renewed/
   - git remote add -t android-3.18 upstream https://android.googlesource.com/kernel/mediatek.git
-  - git pull upstream android-3.18
+  - git pull upstream android-3.18 --allow-unrelated-histories
   - git push -f -q https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:android-3.18
   - cd -
   - git commit --amend
