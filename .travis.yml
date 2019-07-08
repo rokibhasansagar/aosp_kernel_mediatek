@@ -22,7 +22,7 @@ script:
   - cp -a $TRAVIS_BUILD_DIR/renewed_kernel_mediatek/* .
   - rm -rf $TRAVIS_BUILD_DIR/renewed_kernel_mediatek/
   - git add -A .
-  - git commit -m "Release 3.18.y MediaTek Kernel Source at $(date +%Y%m%d-%H%M)"
+  - git commit -m "Release 3.18.y MediaTek Kernel Source at $(date +%Y%m%d-%H%M)" || echo -e "All files are identical, No need to push new files"
   - git push --force https://$GitOAUTHToken@github.com/rokibhasansagar/aosp_kernel_mediatek.git HEAD:android-3.18
 branches:
   only:
