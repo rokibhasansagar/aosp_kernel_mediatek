@@ -1,5 +1,6 @@
 os: linux
 dist: bionic
+group: edge
 language: generic
 git:
   depth: 1
